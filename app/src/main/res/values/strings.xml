@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Green Pot</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="sign_in">Sign In</string>
+    <string name="ssid">    SSID:</string>
+    <string name="connect">Connect</string>
+    <string name="consumed_power">Consumed Power</string>
+    <string name="_24_kw">24 KW</string>
+</resources>
