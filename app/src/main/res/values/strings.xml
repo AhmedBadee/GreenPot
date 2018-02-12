@@ -7,4 +7,8 @@
     <string name="connect">Connect</string>
     <string name="consumed_power">Consumed Power</string>
     <string name="_24_kw">24 KW</string>
+    <string name="t_v">T.V</string>
+    <string name="set_timer">Set Timer</string>
+    <string name="device">Device</string>
+    <string name="receiver">Receiver</string>
 </resources>
