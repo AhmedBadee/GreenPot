@@ -7,19 +7,135 @@
     android:orientation="vertical"
     tools:context="com.mahmoud.greenpot.Plug">
 
-    <TextView
-        android:id="@+id/tv_consumed_power"
+    <LinearLayout
+        android:id="@+id/ll_power"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/consumed_power"
-        android:textSize="15sp"
-        android:layout_margin="10dp"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_consumed_power_value"
+        <TextView
+            android:id="@+id/tv_consumed_power"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/consumed_power"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_consumed_power_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="35dp"
+            android:text="@string/_24_kw"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/_24_kw"
-        android:textSize="25sp"/>
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_switches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <Switch
+                    android:id="@+id/switch_first"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp" />
+
+                <TextView
+                    android:id="@+id/tv_first"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/t_v"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/ll_first"
+                android:layout_marginBottom="20dp">
+
+                <Switch
+                    android:id="@+id/switch_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"/>
+
+                <TextView
+                    android:id="@+id/tv_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/device"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_third"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/ll_second"
+                android:layout_marginBottom="20dp">
+
+                <Switch
+                    android:id="@+id/switch_third"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"/>
+
+                <TextView
+                    android:id="@+id/tv_third"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/receiver"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_timer_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="@string/set_timer" />
+
+            <Button
+                android:id="@+id/btn_timer_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="@string/set_timer" />
+
+            <Button
+                android:id="@+id/btn_timer_third"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:text="@string/set_timer" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
