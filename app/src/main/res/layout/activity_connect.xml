@@ -26,7 +26,8 @@
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="55dp"/>
 
     </LinearLayout>
 
@@ -54,10 +55,10 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_sign_in"
+        android:id="@+id/btn_connect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/connect"
-        android:contentDescription="@string/sign_in" />
+        android:contentDescription="@string/connect" />
 
 </LinearLayout>
