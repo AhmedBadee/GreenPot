@@ -9,13 +9,17 @@ import android.widget.Switch;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 
 public class Plug extends AppCompatActivity {
 
@@ -48,6 +52,7 @@ public class Plug extends AppCompatActivity {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Log.e("CONNECTION", "Connected");
+                    subscribe();
                 }
 
                 @Override
@@ -60,25 +65,50 @@ public class Plug extends AppCompatActivity {
             exception.printStackTrace();
         }
 
-        switchFirst.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        client.setCallback(new MqttCallback() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    publish("ON");
-                } else {
-                    publish("OFF");
-                }
+            public void connectionLost(Throwable cause) {
+
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                Log.e("MESSAGE", new String(message.getPayload()));
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+
             }
         });
     }
 
     private void publish(String message) {
-        String topic = "inTopic";
+        String topic = "PlugPub";
 
         try {
             client.publish(topic, message.getBytes(), 0, false);
         } catch (MqttException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void subscribe() {
+        String topic = "Plug";
+
+        try {
+            client.subscribe(topic, 0);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @OnCheckedChanged(R.id.switch_first)
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            publish("ON");
+        } else {
+            publish("OFF");
         }
     }
 }
