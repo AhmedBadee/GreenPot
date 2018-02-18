@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
+    <!-- TODO: For MQTT implementation -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,16 +18,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
+
+        <!-- TODO: For MQTT implementation -->
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
         <activity android:name=".SignIn">
         </activity>
-        <activity android:name=".Connect">
+        <activity android:name=".Connect" />
+        <activity android:name=".Plug">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Plug" />
     </application>
 
 </manifest>
