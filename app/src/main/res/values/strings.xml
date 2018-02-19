@@ -11,4 +11,10 @@
     <string name="set_timer">Set Timer</string>
     <string name="device">Device</string>
     <string name="receiver">Receiver</string>
+    <string name="host_url">server:port</string>
+    <string name="server_username">Server Username</string>
+    <string name="server_password">Server Password</string>
+    <string name="message_to_be_published">Message To Be Published</string>
+    <string name="subscribed">Subscribed Message</string>
+    <string name="publish">Publish</string>
 </resources>
