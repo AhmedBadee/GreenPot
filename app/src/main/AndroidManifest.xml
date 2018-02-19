@@ -25,7 +25,8 @@
         <activity android:name=".SignIn">
         </activity>
         <activity android:name=".Connect" />
-        <activity android:name=".Plug">
+        <activity android:name=".Plug" />
+        <activity android:name=".MqttConnect">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
