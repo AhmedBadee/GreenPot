@@ -1,11 +1,11 @@
 package com.mahmoud.greenpot;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -23,9 +23,9 @@ import butterknife.OnCheckedChanged;
 
 public class Plug extends AppCompatActivity {
 
-    private static String MQTTHOST = "tcp://m23.cloudmqtt.com:13207";
-    private static String USERNAME = "ruafzbed";
-    private static String PASSWORD = "QK7Hde2Drz2r";
+    private static String MQTTHOST /* = "tcp://m23.cloudmqtt.com:13207" */;
+    private static String USERNAME /* = "ruafzbed" */;
+    private static String PASSWORD /* = "QK7Hde2Drz2r" */;
 
     private MqttAndroidClient client;
 
@@ -38,26 +38,38 @@ public class Plug extends AppCompatActivity {
         setContentView(R.layout.activity_plug);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        MQTTHOST = intent.getStringExtra("MQTTHOST");
+        USERNAME = intent.getStringExtra("USERNAME");
+        PASSWORD = intent.getStringExtra("PASSWORD");
+
         String clientId = MqttClient.generateClientId();
 
-        client = new MqttAndroidClient(this.getApplicationContext(), MQTTHOST, clientId);
+        client = new MqttAndroidClient(this.getApplicationContext(), "tcp://" + MQTTHOST, clientId);
 
-        MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
-        mqttConnectOptions.setUserName(USERNAME);
-        mqttConnectOptions.setPassword(PASSWORD.toCharArray());
-
+        IMqttToken iMqttToken;
         try {
-            IMqttToken iMqttToken = client.connect(mqttConnectOptions);
+            if (USERNAME.compareTo("") == 0 || PASSWORD.compareTo("") == 0) {
+                iMqttToken = client.connect();
+            } else {
+                MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
+                mqttConnectOptions.setUserName(USERNAME);
+                mqttConnectOptions.setPassword(PASSWORD.toCharArray());
+
+                iMqttToken = client.connect(mqttConnectOptions);
+            }
             iMqttToken.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
-                    Log.e("CONNECTION", "Connected");
-                    subscribe();
+                    Toast.makeText(Plug.this, "CONNECTED", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-                    Log.e("CONNECTION", "Failed");
+                    Toast.makeText(Plug.this, "FAILED!!!", Toast.LENGTH_LONG).show();
+
+                    Intent intent1 = new Intent(Plug.this, MqttConnect.class);
+                    startActivity(intent1);
                 }
             });
 
@@ -73,7 +85,7 @@ public class Plug extends AppCompatActivity {
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
-                Log.e("MESSAGE", new String(message.getPayload()));
+
             }
 
             @Override
@@ -83,8 +95,20 @@ public class Plug extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // disconnect();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disconnect();
+    }
+
     private void publish(String message) {
-        String topic = "PlugPub";
+        String topic = "Plug";
 
         try {
             client.publish(topic, message.getBytes(), 0, false);
@@ -94,7 +118,7 @@ public class Plug extends AppCompatActivity {
     }
 
     private void subscribe() {
-        String topic = "Plug";
+        String topic = "PlugPub";
 
         try {
             client.subscribe(topic, 0);
@@ -103,12 +127,49 @@ public class Plug extends AppCompatActivity {
         }
     }
 
+    private void disconnect() {
+        try {
+            IMqttToken disconnectToken = client.disconnect();
+            disconnectToken.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Toast.makeText(Plug.this, "DISCONNECTED", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
     @OnCheckedChanged(R.id.switch_first)
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public void onCheckedChanged1(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            publish("ON");
+            publish("1");
         } else {
-            publish("OFF");
+            publish("1");
+        }
+    }
+
+    @OnCheckedChanged(R.id.switch_second)
+    public void onCheckedChanged2(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            publish("2");
+        } else {
+            publish("2");
+        }
+    }
+
+    @OnCheckedChanged(R.id.switch_third)
+    public void onCheckedChanged3(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            publish("3");
+        } else {
+            publish("3");
         }
     }
 }
