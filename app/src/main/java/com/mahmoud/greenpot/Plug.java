@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -29,8 +30,17 @@ public class Plug extends AppCompatActivity {
 
     private MqttAndroidClient client;
 
+    @BindView(R.id.tv_consumed_power_value)
+    TextView tvConsumedPowerValue;
+
     @BindView(R.id.switch_first)
     Switch switchFirst;
+
+    @BindView(R.id.switch_second)
+    Switch switchSecond;
+
+    @BindView(R.id.switch_third)
+    Switch switchThird;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,7 @@ public class Plug extends AppCompatActivity {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     Toast.makeText(Plug.this, "CONNECTED", Toast.LENGTH_LONG).show();
+                    subscribe();
                 }
 
                 @Override
@@ -85,7 +96,24 @@ public class Plug extends AppCompatActivity {
 
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
+                String power = new String(message.getPayload());
+                if (power.substring(0, 4).equalsIgnoreCase("Power"))
+                    tvConsumedPowerValue.setText(power.substring(5));
 
+                if (new String(message.getPayload()).equals("1"))
+                    switchFirst.setChecked(true);
+                else
+                    switchFirst.setChecked(false);
+
+                if (new String(message.getPayload()).equals("2"))
+                    switchSecond.setChecked(true);
+                else
+                    switchSecond.setChecked(false);
+
+                if (new String(message.getPayload()).equals("3"))
+                    switchThird.setChecked(true);
+                else
+                    switchThird.setChecked(false);
             }
 
             @Override
@@ -98,13 +126,13 @@ public class Plug extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        // disconnect();
+        disconnect();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disconnect();
+        // disconnect();
     }
 
     private void publish(String message) {
