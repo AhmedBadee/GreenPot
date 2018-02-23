@@ -6,15 +6,16 @@
     <string name="ssid">    SSID:</string>
     <string name="connect">Connect</string>
     <string name="consumed_power">Consumed Power</string>
-    <string name="_24_kw">24 KW</string>
+    <string name="_24_kw">______</string>
     <string name="t_v">T.V</string>
     <string name="set_timer">Set Timer</string>
     <string name="device">Device</string>
     <string name="receiver">Receiver</string>
     <string name="host_url">server:port</string>
-    <string name="server_username">Server Username</string>
-    <string name="server_password">Server Password</string>
+    <string name="server_username">Server Username (Optional)</string>
+    <string name="server_password">Server Password (Optional)</string>
     <string name="message_to_be_published">Message To Be Published</string>
     <string name="subscribed">Subscribed Message</string>
     <string name="publish">Publish</string>
+    <string name="new_device_name">New Device Name</string>
 </resources>
